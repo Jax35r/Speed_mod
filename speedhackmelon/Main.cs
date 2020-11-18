@@ -15,6 +15,7 @@ using Assets.Scripts.Models.Towers;
 using Assets.Scripts.Unity;
 
 
+
 using static NKHook6.Api.Events._Towers.TowerEvents;
 using Assets.Scripts.Simulation.Towers;
 
@@ -25,6 +26,7 @@ using static NKHook6.Api.Events._TimeManager.TimeManagerEvents;
 using Il2CppSystem.Collections;
 using NKHook6.Api.Events._Bloons;
 using NKHook6.Api.Events._Weapons;
+using Assets.Scripts.Unity.UI_New.Popups;
 
 namespace speedhackmelon
 {
@@ -32,6 +34,7 @@ namespace speedhackmelon
     {
 
         public static int speed = 3;
+        public static int customspeed = 100;
         public static bool hypersonic = false;
 
         public override void OnApplicationStart()
@@ -52,7 +55,8 @@ namespace speedhackmelon
         [EventAttribute("WeaponCreatedEvent")]
         public static void WeaponCreatedEvent(WeaponEvents.CreatedEvent e)
         {
-            if(hypersonic)
+            Logger.Log("WeaponCreatedEvent");
+            if (hypersonic)
                 e.instance.weaponModel.rate = 0;
         }
 
@@ -64,10 +68,16 @@ namespace speedhackmelon
 
             string key = e.key + "";
 
+            //if (key == "Alpha4")
+            //{
+            //    Logger.Log("added cash");
+            //    InGame.instance.addCash(1000000);
+
+            //}
             //if (key == "Alpha5")
             //{
-            //    hypersonic = !hypersonic;
-            //    Logger.Log("hypersonic: " + hypersonic);
+            //    hypersonic = true;
+            //    Logger.Log("hypersonic on");
             //}
             if (key == "Alpha6")
             {
@@ -86,8 +96,18 @@ namespace speedhackmelon
             }
             if (key == "Alpha9")
             {
-                speed = 100;
-                Logger.Log("speed = 100");
+                speed = customspeed;
+                Logger.Log("speed = " + customspeed);
+            }
+            if (key == "F5")
+            {
+                Il2CppSystem.Action<int> deb = (Il2CppSystem.Action<int>)delegate (int s)
+                {
+                    customspeed = s;
+                    speed = customspeed;
+                };
+                PopupScreen.instance.ShowSetValuePopup("speed",
+                "which speed ? ", deb, 100);
             }
 
 
