@@ -55,7 +55,7 @@ namespace speedhackmelon
         [EventAttribute("WeaponCreatedEvent")]
         public static void WeaponCreatedEvent(WeaponEvents.CreatedEvent e)
         {
-            Logger.Log("WeaponCreatedEvent");
+            //Logger.Log("WeaponCreatedEvent");
             if (hypersonic)
                 e.instance.weaponModel.rate = 0;
         }
